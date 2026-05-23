@@ -85,6 +85,7 @@ const visitDateInput = document.querySelector("#visitDateInput");
 const quantityInput = document.querySelector("#quantityInput");
 const noteInput = document.querySelector("#noteInput");
 const submitReservation = document.querySelector("#submitReservation");
+const closeDialogButtons = [...document.querySelectorAll("[value='cancel']")];
 const toast = document.querySelector("#toast");
 
 let activeFilter = "all";
@@ -204,6 +205,12 @@ productGrid.addEventListener("click", (event) => {
   const button = event.target.closest(".reserve-button");
   if (!button || button.disabled) return;
   openReservation(button.dataset.productId);
+});
+
+closeDialogButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (dialog.open) dialog.close("cancel");
+  });
 });
 
 submitReservation.addEventListener("click", async () => {

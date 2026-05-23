@@ -130,7 +130,7 @@
 
     <dialog id="reservationDialog" class="reservation-dialog" aria-labelledby="dialogTitle">
       <form method="dialog" class="dialog-panel">
-        <button class="icon-button close-button" value="cancel" aria-label="閉じる" type="submit">×</button>
+        <button class="icon-button close-button" value="cancel" aria-label="閉じる" type="button">×</button>
         <div class="selected-product">
           <img id="dialogImage" alt="" />
           <div>
@@ -165,7 +165,7 @@
           送信内容は予約一覧スプレッドシートへ仮予約として記録されます。
         </p>
         <menu class="dialog-actions">
-          <button class="ghost-button" value="cancel">戻る</button>
+          <button class="ghost-button" value="cancel" type="button">戻る</button>
           <button id="submitReservation" class="primary-button" type="button">仮予約を送信</button>
         </menu>
       </form>
