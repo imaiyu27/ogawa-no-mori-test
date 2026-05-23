@@ -211,16 +211,16 @@ submitReservation.addEventListener("click", async () => {
   const form = submitReservation.closest("form");
   if (form && !form.reportValidity()) return;
 
-  const payload = {
+  const payload = new URLSearchParams({
     productId: selectedProduct.id,
     productName: selectedProduct.name,
-    price: selectedProduct.price,
+    price: String(selectedProduct.price),
     quantity: quantityInput.value,
     customerName: customerNameInput.value.trim(),
     contact: contactInput.value.trim(),
     visitDate: visitDateInput.value,
     note: noteInput.value.trim(),
-  };
+  });
 
   submitReservation.disabled = true;
   submitReservation.textContent = "送信中...";
@@ -229,10 +229,7 @@ submitReservation.addEventListener("click", async () => {
     await fetch(RESERVATION_ENDPOINT, {
       method: "POST",
       mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      },
-      body: JSON.stringify(payload),
+      body: payload,
     });
 
     if (dialog.open) dialog.close("confirm");
