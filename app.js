@@ -104,7 +104,15 @@ function normalizeProduct(product) {
     description: String(product.description || ""),
     image: String(product.image || ""),
     status: String(product.status || ""),
+    updatedAt: String(product.updatedAt || ""),
   };
+}
+
+function imageUrl(product) {
+  if (!product.image) return "";
+  if (!product.updatedAt) return product.image;
+  const separator = product.image.includes("?") ? "&" : "?";
+  return `${product.image}${separator}v=${encodeURIComponent(product.updatedAt)}`;
 }
 
 function loadProductsFromSheet() {
@@ -167,7 +175,7 @@ function productCard(product) {
   return `
     <article class="product-card">
       <div class="product-media">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <img src="${imageUrl(product)}" alt="${product.name}" loading="lazy">
         <span class="stock-badge ${stockClass(product)}">${stockLabel(product)}</span>
       </div>
       <div class="product-body">
