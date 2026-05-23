@@ -11,7 +11,7 @@ const fallbackProducts = [
     stock: 10,
     description: "新緑の葉が軽やかで、玄関や店舗装花に使いやすい定番の枝ものです。",
     image:
-      "https://images.unsplash.com/photo-1495231916356-a86217efff12?auto=format&fit=crop&w=900&q=80",
+      "images/BR-202605-001.png",
   },
   {
     id: "BR-202605-002",
@@ -22,7 +22,7 @@ const fallbackProducts = [
     stock: 4,
     description: "細い枝ぶりと葉の表情がきれいな季節枝。花器に一本でも映えます。",
     image:
-      "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=900&q=80",
+      "images/BR-202605-002.png",
   },
   {
     id: "BR-202605-003",
@@ -33,7 +33,7 @@ const fallbackProducts = [
     stock: 8,
     description: "明るいグリーンの花材。枝ものと合わせた束づくりにも向いています。",
     image:
-      "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80",
+      "images/BR-202605-003.png",
   },
   {
     id: "BR-202605-004",
@@ -44,7 +44,7 @@ const fallbackProducts = [
     stock: 3,
     description: "葉の細かさが魅力の小鉢素材。育成用にも贈り物にも選びやすいサイズです。",
     image:
-      "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=900&q=80",
+      "images/BR-202605-004.png",
   },
   {
     id: "BR-202605-005",
@@ -55,7 +55,7 @@ const fallbackProducts = [
     stock: 0,
     description: "次回入荷待ちの商品です。売切れ状態の表示確認用に残しています。",
     image:
-      "https://images.unsplash.com/photo-1595433502559-d8f05e6a1041?auto=format&fit=crop&w=900&q=80",
+      "images/BR-202605-005.png",
   },
   {
     id: "BR-202605-006",
@@ -66,7 +66,7 @@ const fallbackProducts = [
     stock: 6,
     description: "ふわりとした質感が人気の枝花材。初夏のディスプレイにおすすめです。",
     image:
-      "https://images.unsplash.com/photo-1468327768560-75b778cbb551?auto=format&fit=crop&w=900&q=80",
+      "images/BR-202605-006.png",
   },
 ];
 
