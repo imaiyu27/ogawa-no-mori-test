@@ -1,7 +1,7 @@
 const RESERVATION_ENDPOINT =
   "https://script.google.com/macros/s/AKfycbwwmaEinUCm_VZu_ZNKIYKzQwcDK0Jis9ScqnuJA5nAx_KNmVJzCC3Xj_crIDg0svs/exec";
 
-const products = [
+const fallbackProducts = [
   {
     id: "BR-202605-001",
     category: "枝もの",
@@ -89,8 +89,56 @@ const closeDialogButtons = [...document.querySelectorAll("[value='cancel']")];
 const toast = document.querySelector("#toast");
 
 let activeFilter = "all";
+let products = [...fallbackProducts];
 let selectedProduct = null;
 let toastTimer = null;
+
+function normalizeProduct(product) {
+  return {
+    id: String(product.id || ""),
+    category: String(product.category || ""),
+    name: String(product.name || ""),
+    price: Number(product.price || 0),
+    unit: String(product.unit || ""),
+    stock: Number(product.stock || 0),
+    description: String(product.description || ""),
+    image: String(product.image || ""),
+    status: String(product.status || ""),
+  };
+}
+
+function loadProductsFromSheet() {
+  return new Promise((resolve, reject) => {
+    const callbackName = `ogawaProductsCallback_${Date.now()}`;
+    const script = document.createElement("script");
+    const timeout = window.setTimeout(() => {
+      cleanup();
+      reject(new Error("Product master request timed out"));
+    }, 5000);
+
+    function cleanup() {
+      window.clearTimeout(timeout);
+      delete window[callbackName];
+      script.remove();
+    }
+
+    window[callbackName] = (response) => {
+      cleanup();
+      if (!response || response.ok !== true || !Array.isArray(response.products)) {
+        reject(new Error("Invalid product master response"));
+        return;
+      }
+      resolve(response.products.map(normalizeProduct).filter((product) => product.id && product.name));
+    };
+
+    script.onerror = () => {
+      cleanup();
+      reject(new Error("Product master request failed"));
+    };
+    script.src = `${RESERVATION_ENDPOINT}?action=products&callback=${callbackName}&v=${Date.now()}`;
+    document.head.appendChild(script);
+  });
+}
 
 function currency(value) {
   return new Intl.NumberFormat("ja-JP", {
@@ -249,4 +297,17 @@ submitReservation.addEventListener("click", async () => {
   }
 });
 
-renderProducts();
+async function initProducts() {
+  resultCount.textContent = "読み込み中...";
+  try {
+    const loadedProducts = await loadProductsFromSheet();
+    if (loadedProducts.length > 0) {
+      products = loadedProducts;
+    }
+  } catch (error) {
+    showToast("商品マスタを読み込めないため、サンプル商品を表示しています。");
+  }
+  renderProducts();
+}
+
+initProducts();
