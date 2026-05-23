@@ -142,15 +142,15 @@
         <div class="form-grid">
           <label>
             お名前
-            <input type="text" placeholder="例: 山田 太郎" required />
+            <input id="customerNameInput" type="text" placeholder="例: 山田 太郎" autocomplete="name" required />
           </label>
           <label>
             連絡先
-            <input type="tel" placeholder="例: 090-0000-0000" required />
+            <input id="contactInput" type="tel" placeholder="例: 090-0000-0000" autocomplete="tel" required />
           </label>
           <label>
             来店予定日
-            <input type="date" required />
+            <input id="visitDateInput" type="date" required />
           </label>
           <label>
             数量
@@ -158,11 +158,11 @@
           </label>
           <label class="wide">
             備考
-            <textarea rows="3" placeholder="長さ、枝ぶり、色味など希望があれば入力"></textarea>
+            <textarea id="noteInput" rows="3" placeholder="長さ、枝ぶり、色味など希望があれば入力"></textarea>
           </label>
         </div>
         <p class="dialog-note">
-          実運用では、このボタンを商品ID入りのGoogleフォーム事前入力URLに差し替えます。
+          送信内容は予約一覧スプレッドシートへ仮予約として記録されます。
         </p>
         <menu class="dialog-actions">
           <button class="ghost-button" value="cancel">戻る</button>

@@ -1,3 +1,6 @@
+const RESERVATION_ENDPOINT =
+  "https://script.google.com/macros/s/AKfycbwwmaEinUCm_VZu_ZNKIYKzQwcDK0Jis9ScqnuJA5nAx_KNmVJzCC3Xj_crIDg0svs/exec";
+
 const products = [
   {
     id: "BR-202605-001",
@@ -76,7 +79,11 @@ const dialogImage = document.querySelector("#dialogImage");
 const dialogCategory = document.querySelector("#dialogCategory");
 const dialogTitle = document.querySelector("#dialogTitle");
 const dialogPrice = document.querySelector("#dialogPrice");
+const customerNameInput = document.querySelector("#customerNameInput");
+const contactInput = document.querySelector("#contactInput");
+const visitDateInput = document.querySelector("#visitDateInput");
 const quantityInput = document.querySelector("#quantityInput");
+const noteInput = document.querySelector("#noteInput");
 const submitReservation = document.querySelector("#submitReservation");
 const toast = document.querySelector("#toast");
 
@@ -160,6 +167,10 @@ function openReservation(productId) {
   dialogPrice.textContent = `${currency(selectedProduct.price)} 税込 / ${selectedProduct.unit}`;
   quantityInput.max = selectedProduct.stock;
   quantityInput.value = "1";
+  customerNameInput.value = "";
+  contactInput.value = "";
+  visitDateInput.value = "";
+  noteInput.value = "";
 
   if (typeof dialog.showModal === "function") {
     dialog.showModal();
@@ -195,12 +206,43 @@ productGrid.addEventListener("click", (event) => {
   openReservation(button.dataset.productId);
 });
 
-submitReservation.addEventListener("click", () => {
+submitReservation.addEventListener("click", async () => {
   if (!selectedProduct) return;
   const form = submitReservation.closest("form");
   if (form && !form.reportValidity()) return;
-  if (dialog.open) dialog.close("confirm");
-  showToast(`${selectedProduct.name}の仮予約を受け付けました。Googleフォーム連携時はここで送信します。`);
+
+  const payload = {
+    productId: selectedProduct.id,
+    productName: selectedProduct.name,
+    price: selectedProduct.price,
+    quantity: quantityInput.value,
+    customerName: customerNameInput.value.trim(),
+    contact: contactInput.value.trim(),
+    visitDate: visitDateInput.value,
+    note: noteInput.value.trim(),
+  };
+
+  submitReservation.disabled = true;
+  submitReservation.textContent = "送信中...";
+
+  try {
+    await fetch(RESERVATION_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (dialog.open) dialog.close("confirm");
+    showToast(`${selectedProduct.name}の仮予約を送信しました。店舗確認後、必要に応じて連絡します。`);
+  } catch (error) {
+    showToast("送信できませんでした。通信状況を確認して、もう一度お試しください。");
+  } finally {
+    submitReservation.disabled = false;
+    submitReservation.textContent = "仮予約を送信";
+  }
 });
 
 renderProducts();
