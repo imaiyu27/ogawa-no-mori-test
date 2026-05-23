@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>枝物直売所 取り置き予約</title>
+    <meta
+      name="description"
+      content="枝物直売所の旬の在庫を確認し、来店前に取り置き予約できる静的ページです。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="枝物直売所 取り置き予約 トップ">
+        <span class="brand-mark" aria-hidden="true">枝</span>
+        <span>
+          <strong>枝物直売所</strong>
+          <small>取り置き予約</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="ページ内メニュー">
+        <a href="#products">在庫</a>
+        <a href="#guide">受け取り</a>
+        <a href="#contact">連絡先</a>
+      </nav>
+      <a class="line-button" href="#contact" aria-label="LINEで問い合わせ">
+        <span aria-hidden="true">LINE</span>
+        問い合わせ
+      </a>
+    </header>
+
+    <main id="top">
+      <section class="stock-board" aria-labelledby="page-title">
+        <div class="stock-copy">
+          <p class="eyebrow">本日更新 2026年5月23日</p>
+          <h1 id="page-title">今週の枝物在庫</h1>
+          <p>
+            店頭に並ぶ前の枝物・盆栽素材を、写真と目安在庫で確認できます。
+            ご希望の商品は来店予定日を添えて仮予約してください。
+          </p>
+          <div class="status-strip" aria-label="営業情報">
+            <span>営業時間 9:00-16:00</span>
+            <span>受取目安 3日以内</span>
+            <span>仮受付後に在庫確認</span>
+          </div>
+        </div>
+        <figure class="feature-photo">
+          <img
+            src="https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?auto=format&fit=crop&w=1200&q=80"
+            alt="店頭に並ぶ枝物の束"
+          />
+          <figcaption>季節の枝物は長さや枝ぶりに個体差があります</figcaption>
+        </figure>
+      </section>
+
+      <section class="toolbar" aria-label="商品検索と絞り込み">
+        <div class="search-box">
+          <label for="searchInput">商品検索</label>
+          <input id="searchInput" type="search" placeholder="例: ドウダン、モミジ" autocomplete="off" />
+        </div>
+        <div class="filter-tabs" role="tablist" aria-label="カテゴリ">
+          <button class="filter-tab is-active" type="button" data-filter="all" role="tab" aria-selected="true">
+            すべて
+          </button>
+          <button class="filter-tab" type="button" data-filter="枝もの" role="tab" aria-selected="false">
+            枝もの
+          </button>
+          <button class="filter-tab" type="button" data-filter="盆栽素材" role="tab" aria-selected="false">
+            盆栽素材
+          </button>
+          <button class="filter-tab" type="button" data-filter="花材" role="tab" aria-selected="false">
+            花材
+          </button>
+        </div>
+      </section>
+
+      <section class="inventory" id="products" aria-labelledby="inventory-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Inventory</p>
+            <h2 id="inventory-title">予約できる商品</h2>
+          </div>
+          <p id="resultCount" class="result-count" aria-live="polite"></p>
+        </div>
+        <div id="productGrid" class="product-grid"></div>
+      </section>
+
+      <section class="info-band" id="guide" aria-labelledby="guide-title">
+        <div>
+          <p class="eyebrow">Guide</p>
+          <h2 id="guide-title">取り置きの流れ</h2>
+        </div>
+        <ol class="step-list">
+          <li>
+            <strong>商品を選ぶ</strong>
+            写真・価格・在庫目安を確認し、予約ボタンを押します。
+          </li>
+          <li>
+            <strong>来店予定を送る</strong>
+            氏名、連絡先、来店予定日、数量を入力します。
+          </li>
+          <li>
+            <strong>店舗で確認</strong>
+            在庫状況を確認し、必要があれば店舗から連絡します。
+          </li>
+        </ol>
+      </section>
+
+      <section class="notice-grid" aria-label="予約時の注意事項">
+        <article>
+          <h3>予約の扱い</h3>
+          <p>送信時点では仮受付です。枝ぶりや在庫は日々変わるため、受け取り前に店舗で最終確認します。</p>
+        </article>
+        <article>
+          <h3>支払い</h3>
+          <p>お支払いは店頭でお願いします。価格は税込表示の想定です。</p>
+        </article>
+        <article id="contact">
+          <h3>お問い合わせ</h3>
+          <p>営業時間内にLINEまたは電話でご連絡ください。急ぎの変更は電話連絡が確実です。</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p><strong>枝物直売所</strong> 〒000-0000 店舗住所をここに入力</p>
+      <p>電話 000-0000-0000 / 営業 9:00-16:00 / 定休日 火曜</p>
+    </footer>
+
+    <dialog id="reservationDialog" class="reservation-dialog" aria-labelledby="dialogTitle">
+      <form method="dialog" class="dialog-panel">
+        <button class="icon-button close-button" value="cancel" aria-label="閉じる" type="submit">×</button>
+        <div class="selected-product">
+          <img id="dialogImage" alt="" />
+          <div>
+            <p id="dialogCategory" class="eyebrow"></p>
+            <h2 id="dialogTitle"></h2>
+            <p id="dialogPrice"></p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>
+            お名前
+            <input type="text" placeholder="例: 山田 太郎" required />
+          </label>
+          <label>
+            連絡先
+            <input type="tel" placeholder="例: 090-0000-0000" required />
+          </label>
+          <label>
+            来店予定日
+            <input type="date" required />
+          </label>
+          <label>
+            数量
+            <input id="quantityInput" type="number" min="1" value="1" required />
+          </label>
+          <label class="wide">
+            備考
+            <textarea rows="3" placeholder="長さ、枝ぶり、色味など希望があれば入力"></textarea>
+          </label>
+        </div>
+        <p class="dialog-note">
+          実運用では、このボタンを商品ID入りのGoogleフォーム事前入力URLに差し替えます。
+        </p>
+        <menu class="dialog-actions">
+          <button class="ghost-button" value="cancel">戻る</button>
+          <button id="submitReservation" class="primary-button" type="button">仮予約を送信</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
