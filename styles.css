@@ -69,6 +69,10 @@ a {
   text-decoration: none;
 }
 
+.brand > span:last-child {
+  min-width: 0;
+}
+
 .brand-mark {
   display: grid;
   place-items: center;
@@ -83,6 +87,7 @@ a {
 .brand strong,
 .brand small {
   display: block;
+  white-space: nowrap;
 }
 
 .brand small {
@@ -121,11 +126,14 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   gap: 8px;
   min-height: 44px;
   padding: 0 16px;
   background: #05b54b;
   color: #fff;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 main {
@@ -681,6 +689,7 @@ h3 {
   }
 
   .site-header {
+    grid-template-columns: minmax(0, 1fr) auto;
     min-height: 64px;
     gap: 10px;
     padding: 10px 12px;
@@ -696,14 +705,17 @@ h3 {
   }
 
   .line-button {
-    width: 46px;
+    width: 48px;
+    min-width: 48px;
+    min-height: 40px;
+    height: 40px;
     padding: 0;
-    overflow: hidden;
-    color: transparent;
+    gap: 0;
+    font-size: 0.82rem;
   }
 
-  .line-button span {
-    color: #fff;
+  .line-button-label {
+    display: none;
   }
 
   .toolbar {
